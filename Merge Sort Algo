@@ -1,0 +1,49 @@
+    public static void conquer(int arr[], int start, int mid, int end){
+        int merge[] = new int[end-start+1];
+        int index1 = start;
+        int index2 = mid+1;
+        int mergeindex = 0;
+        while (index1<= mid && index2 <= end){
+            if (arr[index1] <= arr[index2]){
+                merge[mergeindex] = arr[index1];
+                mergeindex++;
+                index1++;
+            }
+            else {
+                merge[mergeindex] = arr[index2];
+                mergeindex++;
+                index2++;
+            }
+        }
+        while (index1<= mid){
+            merge[mergeindex] = arr[index1];
+            mergeindex++;
+            index1++;
+        }
+        while (index2 <= end){
+            merge[mergeindex] = arr[index2];
+            mergeindex++;
+            index2++;
+        }
+        for (int i = 0, j = start; i<merge.length;i++,j++){
+            arr[j] = merge[i];
+        }
+
+    }
+    public static void devide(int arr[],int start, int end){
+        if (start >= end){
+            return;
+        }
+        int mid = (start + end)/2;
+        devide(arr,start,mid);
+        devide(arr,mid+1,end);
+        conquer(arr,start,mid,end);
+    }
+    public static void main(String[] args) {
+        int arr[] = {1,4,3,2,9,6,5,0,7,8};
+        int len = arr.length;
+        devide(arr,0,len-1);
+        for (int i = 0;i< arr.length;i++){
+            System.out.print(arr[i]+" ");
+        }
+    }
